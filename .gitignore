@@ -1,10 +1,13 @@
 
-
-venv
-
+# JetBrains IDEs
 .idea
 
+# Python virtual environment
+venv
+
+# Input data
 videos
 
-yolov8s.pt
+# YOLO models
+yolov*
 
