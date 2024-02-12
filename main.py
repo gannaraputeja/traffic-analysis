@@ -32,6 +32,8 @@ southbound_vehicles = dict()
 northbound_counter = list()
 southbound_counter = list()
 
+vehicles_speed = dict()
+
 tracker = Tracker()
 
 cy1 = 323
@@ -81,10 +83,8 @@ while True:
                 southbound_elapsed_time = time.time() - southbound_vehicles[box_id]  # seconds
                 southbound_speed_ms = distance / southbound_elapsed_time
                 southbound_speed_mph = southbound_speed_ms * 2.23694
-                cv2.circle(frame, (cx, cy), 4, (0, 0, 255), -1)
-                cv2.putText(frame, str(box_id), (x4, y3), cv2.FONT_HERSHEY_COMPLEX, 0.6, (0, 255, 255), 1)
-                cv2.putText(frame, f"{southbound_speed_mph:.2f} mph", (x4, y4), cv2.FONT_HERSHEY_COMPLEX, 0.6,
-                            (0, 255, 255), 1)
+                vehicles_speed[box_id] = southbound_speed_mph
+                # cv2.circle(frame, (cx, cy), 4, (0, 0, 255), -1)
                 if box_id not in southbound_counter:
                     southbound_counter.append(box_id)
 
@@ -96,12 +96,15 @@ while True:
                 northbound_elapsed_time = time.time() - northbound_vehicles[box_id]  # seconds
                 northbound_speed_ms = distance / northbound_elapsed_time
                 northbound_speed_mph = northbound_speed_ms * 2.23694
-                cv2.circle(frame, (cx, cy), 4, (0, 0, 255), -1)
-                cv2.putText(frame, str(box_id), (x4, y3), cv2.FONT_HERSHEY_COMPLEX, 0.6, (0, 255, 255), 1)
-                cv2.putText(frame, f"{northbound_speed_mph:.2f} mph", (x4, y4), cv2.FONT_HERSHEY_COMPLEX, 0.6,
-                            (0, 255, 255), 1)
+                vehicles_speed[box_id] = northbound_speed_mph
+                # cv2.circle(frame, (cx, cy), 4, (0, 0, 255), -1)
                 if box_id not in northbound_counter:
                     northbound_counter.append(box_id)
+
+        if box_id in vehicles_speed:
+            # cv2.putText(frame, str(box_id), (x4, y3), cv2.FONT_HERSHEY_COMPLEX, 0.6, (0, 255, 255), 1)
+            cv2.putText(frame, f"{vehicles_speed[box_id]:.2f} mph", (x4, y3), cv2.FONT_HERSHEY_COMPLEX, 0.6,
+                        (0, 255, 255), 1)
 
     cv2.line(frame, (250, cy1), (829, cy1), (255, 255, 255), 1)
     cv2.putText(frame, 'line 1', (274, cy1 - offset), cv2.FONT_HERSHEY_COMPLEX, 0.6, (255, 255, 255), 1)
@@ -114,7 +117,7 @@ while True:
                 (255, 255, 255), 1)
 
     cv2.imshow(windowName, frame)
-    if cv2.waitKey(0) & 0xFF == 27:
+    if cv2.waitKey(1) & 0xFF == 27:
         break
 cap.release()
 cv2.destroyAllWindows()
