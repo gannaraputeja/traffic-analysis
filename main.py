@@ -21,7 +21,7 @@ cap = cv2.VideoCapture('videos/veh2.mp4')
 my_file = open("coco.txt", "r")
 data = my_file.read()
 class_list = data.split("\n")
-# print(class_list)
+
 focus_objects = ["bicycle", "bus", "car", "motorcycle", "truck"]
 
 count = 0
