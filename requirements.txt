@@ -1,0 +1,3 @@
+opencv-python>=4.6.0
+pandas>=1.4.0
+ultralytics>=8.0.0rc1  # Using latest release candidate since no version specified
