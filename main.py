@@ -1,5 +1,6 @@
 import cv2
 import pandas as pd
+import time
 from ultralytics import YOLO
 from tracker import *
 
@@ -25,8 +26,8 @@ class_list = data.split("\n")
 focus_objects = ["bicycle", "bus", "car", "motorcycle", "truck"]
 
 count = 0
-vehicles_northbound = dict()
-vehicles_southbound = dict()
+northbound_vehicles = dict()
+southbound_vehicles = dict()
 
 northbound_counter = list()
 southbound_counter = list()
@@ -36,6 +37,8 @@ tracker = Tracker()
 cy1 = 323
 cy2 = 369
 offset = 6
+
+distance = 10  # meters
 
 while True:
     ret, frame = cap.read()
@@ -71,22 +74,32 @@ while True:
         cv2.rectangle(frame, (x3, y3), (x4, y4), (0, 255, 0), 2)
 
         # southbound vehicles
-        if cy1 < (cy + offset) and cy1 > (cy - offset):
-            vehicles_southbound[box_id] = cy
-        if box_id in vehicles_southbound:
-            if cy2 < (cy + offset) and cy2 > (cy - offset):
+        if (cy + offset) > cy1 > (cy - offset):
+            southbound_vehicles[box_id] = time.time()
+        if box_id in southbound_vehicles:
+            if (cy + offset) > cy2 > (cy - offset):
+                southbound_elapsed_time = time.time() - southbound_vehicles[box_id]
+                southbound_speed_ms = distance / southbound_elapsed_time
+                southbound_speed_kmh = southbound_speed_ms * 3.6
                 cv2.circle(frame, (cx, cy), 4, (0, 0, 255), -1)
                 cv2.putText(frame, str(box_id), (x4, y3), cv2.FONT_HERSHEY_COMPLEX, 0.6, (0, 255, 255), 1)
+                cv2.putText(frame, f"{southbound_speed_kmh:.2f} km/h", (x4, y4), cv2.FONT_HERSHEY_COMPLEX, 0.6,
+                            (0, 255, 255), 1)
                 if box_id not in southbound_counter:
                     southbound_counter.append(box_id)
 
         # northbound vehicles
-        if cy2 < (cy + offset) and cy2 > (cy - offset):
-            vehicles_northbound[box_id] = cy
-        if box_id in vehicles_northbound:
-            if cy1 < (cy + offset) and cy1 > (cy - offset):
+        if (cy + offset) > cy2 > (cy - offset):
+            northbound_vehicles[box_id] = time.time()
+        if box_id in northbound_vehicles:
+            if (cy + offset) > cy1 > (cy - offset):
+                northbound_elapsed_time = time.time() - northbound_vehicles[box_id]
+                northbound_speed_ms = distance / northbound_elapsed_time
+                northbound_speed_kmh = northbound_speed_ms * 3.6
                 cv2.circle(frame, (cx, cy), 4, (0, 0, 255), -1)
                 cv2.putText(frame, str(box_id), (x4, y3), cv2.FONT_HERSHEY_COMPLEX, 0.6, (0, 255, 255), 1)
+                cv2.putText(frame, f"{northbound_speed_kmh:.2f} km/h", (x4, y4), cv2.FONT_HERSHEY_COMPLEX, 0.6,
+                            (0, 255, 255), 1)
                 if box_id not in northbound_counter:
                     northbound_counter.append(box_id)
 
@@ -101,7 +114,7 @@ while True:
                 (255, 255, 255), 1)
 
     cv2.imshow(windowName, frame)
-    if cv2.waitKey(1) & 0xFF == 27:
+    if cv2.waitKey(0) & 0xFF == 27:
         break
 cap.release()
 cv2.destroyAllWindows()
