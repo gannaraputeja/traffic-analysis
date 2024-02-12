@@ -78,12 +78,12 @@ while True:
             southbound_vehicles[box_id] = time.time()
         if box_id in southbound_vehicles:
             if (cy + offset) > cy2 > (cy - offset):
-                southbound_elapsed_time = time.time() - southbound_vehicles[box_id]
+                southbound_elapsed_time = time.time() - southbound_vehicles[box_id]  # seconds
                 southbound_speed_ms = distance / southbound_elapsed_time
-                southbound_speed_kmh = southbound_speed_ms * 3.6
+                southbound_speed_mph = southbound_speed_ms * 2.23694
                 cv2.circle(frame, (cx, cy), 4, (0, 0, 255), -1)
                 cv2.putText(frame, str(box_id), (x4, y3), cv2.FONT_HERSHEY_COMPLEX, 0.6, (0, 255, 255), 1)
-                cv2.putText(frame, f"{southbound_speed_kmh:.2f} km/h", (x4, y4), cv2.FONT_HERSHEY_COMPLEX, 0.6,
+                cv2.putText(frame, f"{southbound_speed_mph:.2f} mph", (x4, y4), cv2.FONT_HERSHEY_COMPLEX, 0.6,
                             (0, 255, 255), 1)
                 if box_id not in southbound_counter:
                     southbound_counter.append(box_id)
@@ -93,12 +93,12 @@ while True:
             northbound_vehicles[box_id] = time.time()
         if box_id in northbound_vehicles:
             if (cy + offset) > cy1 > (cy - offset):
-                northbound_elapsed_time = time.time() - northbound_vehicles[box_id]
+                northbound_elapsed_time = time.time() - northbound_vehicles[box_id]  # seconds
                 northbound_speed_ms = distance / northbound_elapsed_time
-                northbound_speed_kmh = northbound_speed_ms * 3.6
+                northbound_speed_mph = northbound_speed_ms * 2.23694
                 cv2.circle(frame, (cx, cy), 4, (0, 0, 255), -1)
                 cv2.putText(frame, str(box_id), (x4, y3), cv2.FONT_HERSHEY_COMPLEX, 0.6, (0, 255, 255), 1)
-                cv2.putText(frame, f"{northbound_speed_kmh:.2f} km/h", (x4, y4), cv2.FONT_HERSHEY_COMPLEX, 0.6,
+                cv2.putText(frame, f"{northbound_speed_mph:.2f} mph", (x4, y4), cv2.FONT_HERSHEY_COMPLEX, 0.6,
                             (0, 255, 255), 1)
                 if box_id not in northbound_counter:
                     northbound_counter.append(box_id)
