@@ -17,7 +17,7 @@ windowName = 'Traffic Analysis'
 cv2.namedWindow(windowName)
 cv2.setMouseCallback(windowName, on_mouse_move)
 
-cap = cv2.VideoCapture('videos/veh2.mp4')
+cap = cv2.VideoCapture('videos/cctv052x2004080516x01638.avi')
 
 my_file = open("coco.txt", "r")
 data = my_file.read()
@@ -102,7 +102,7 @@ while True:
                     northbound_counter.append(box_id)
 
         if box_id in vehicles_speed:
-            # cv2.putText(frame, str(box_id), (x4, y3), cv2.FONT_HERSHEY_COMPLEX, 0.6, (0, 255, 255), 1)
+            cv2.putText(frame, str(box_id), (x3, y3), cv2.FONT_HERSHEY_COMPLEX, 0.3, (0, 255, 255), 1)
             cv2.putText(frame, f"{vehicles_speed[box_id]:.2f} mph", (x4, y3), cv2.FONT_HERSHEY_COMPLEX, 0.6,
                         (0, 255, 255), 1)
 
