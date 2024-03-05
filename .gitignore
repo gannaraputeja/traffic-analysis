@@ -6,7 +6,8 @@
 venv
 
 # Input data
-videos
+v1/videos
+v2/data
 
 # YOLO models
 yolov*
