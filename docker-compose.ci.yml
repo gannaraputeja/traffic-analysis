@@ -1,0 +1,8 @@
+version: "3.9"
+
+services:
+  backend:
+    image: "traffic-analysis-backend:latest"
+
+  frontend:
+    image: "traffic-analysis-frontend:latest"
