@@ -35,7 +35,7 @@ const Auth: React.FC<AuthProps> = ({
             </Avatar>
           </div>
           <CardHeader
-            title={`traffic-analysis - ${actionName}`}
+            title={`Traffic Smart City - ${actionName}`}
             sx={authStyles.header}
           />
           <div style={authStyles.form}>

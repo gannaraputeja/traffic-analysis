@@ -8,6 +8,6 @@ test("renders dashboard", () => {
       <Dashboard />
     </AdminContext>
   );
-  const linkElement = screen.getByText(/Welcome to admin/i);
+  const linkElement = screen.getByText(/Welcome!/i);
   expect(linkElement).toBeInTheDocument();
 });

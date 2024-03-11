@@ -28,7 +28,7 @@ const Login = () => {
     <Auth
       setEmail={setEmail}
       setPassword={setPassword}
-      actionName="Sign in"
+      actionName="Sign In"
       submit={submit}
       extraActions={
         <Button color="secondary" to={"/register"} component={Link}>

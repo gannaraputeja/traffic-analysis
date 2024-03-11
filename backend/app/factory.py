@@ -19,7 +19,7 @@ def create_app():
         openapi_url=f"{settings.API_PATH}/openapi.json",
         docs_url="/docs/",
         description=description,
-        redoc_url=None,
+        redoc_url="/redoc/",
     )
     setup_routers(app, fastapi_users)
     setup_cors_middleware(app)

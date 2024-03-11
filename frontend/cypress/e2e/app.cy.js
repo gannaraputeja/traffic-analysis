@@ -37,7 +37,7 @@ describe("Test register, login and item", () => {
       },
       { timeout: 2000 }
     );
-    cy.contains("Welcome to admin");
+    cy.contains("Welcome!");
     cy.saveLocalStorage();
   });
 
